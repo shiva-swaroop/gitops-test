@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres
+spec:
+  project: default
+  source:
+    path: k8s/base/postgresql
+    repoURL: 'https://github.com/shiva-swaroop/gitops-test'
+    targetRevision: HEAD
+  destination:
+    namespace: postgres
+    server: 'https://kubernetes.default.svc'
