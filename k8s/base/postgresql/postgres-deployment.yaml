@@ -37,6 +37,7 @@ spec:
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
+              subPath: postgres
           resources:
             requests:
               memory: "256Mi"
