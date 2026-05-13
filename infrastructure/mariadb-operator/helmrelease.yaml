@@ -20,3 +20,7 @@ spec:
     replicaCount: 1
     metrics:
       enabled: false
+    webhook:
+      enabled: false
+    certController:
+      enabled: false
