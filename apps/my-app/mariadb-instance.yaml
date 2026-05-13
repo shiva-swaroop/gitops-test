@@ -7,16 +7,17 @@ metadata:
     app.kubernetes.io/name: my-app
     app.kubernetes.io/part-of: gitops-test
 spec:
-  version: "11.4.2"
+  image: mariadb:11.4.2
   storage:
     size: 1Gi
   replicas: 1
+  port: 3306
   service:
     type: ClusterIP
-    port: 3306
   rootPasswordSecretKeyRef:
     name: mariadb-root-secret
     key: password
+    generate: true
   metrics:
     enabled: false
   resources:
