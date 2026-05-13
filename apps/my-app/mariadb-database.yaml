@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: my-app
     app.kubernetes.io/part-of: gitops-test
 spec:
-  mariaRef:
+  mariaDbRef:
     name: my-app-db
   characterSet: utf8mb4
   collate: utf8mb4_unicode_ci
