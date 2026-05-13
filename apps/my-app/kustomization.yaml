@@ -9,4 +9,6 @@ resources:
   - configmap.yaml
   - deployment.yaml
   - service.yaml
+  - phpmyadmin-deployment.yaml
+  - phpmyadmin-service.yaml
   - secrets
