@@ -79,6 +79,7 @@ def health():
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("SELECT 1")
+        cursor.fetchall()
         cursor.close()
         conn.close()
         return jsonify({"status": "healthy", "database": "connected"}), 200
