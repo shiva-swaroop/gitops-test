@@ -10,6 +10,7 @@ spec:
   image: mariadb:11.4.2
   storage:
     size: 1Gi
+    ephemeral: true
   replicas: 1
   port: 3306
   service:
