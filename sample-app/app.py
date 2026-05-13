@@ -30,6 +30,7 @@ DB_CONFIG = {
     "pool_name": "my-app-pool",
     "pool_size": 5,
     "pool_reset_session": True,
+    "collation": "utf8mb4_unicode_ci",
 }
 
 connection_pool = None

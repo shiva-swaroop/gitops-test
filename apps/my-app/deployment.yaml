@@ -25,7 +25,7 @@ spec:
       containers:
         - name: app
           image: docker.io/shivaswaroop1/my-app:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
               protocol: TCP
