@@ -10,7 +10,6 @@ spec:
   version: "11.4.2"
   storage:
     size: 1Gi
-    storageClassName: standard
   replicas: 1
   service:
     type: ClusterIP

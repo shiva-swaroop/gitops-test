@@ -8,4 +8,4 @@ creation_rules:
     #   kubectl create secret generic sops-age \
     #     --namespace=flux-system \
     #     --from-file=age.agekey=/path/to/key.txt
-    age: age1...
+    age: age167nhpzxez44rq7ld8mv5erdetsv6nshdcgvh03pkaqncr28f23psgdzwce
