@@ -14,6 +14,10 @@ spec:
         name: mariadb-operator
         namespace: flux-system
       interval: 1h
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   values:
     replicaCount: 1
     metrics:
