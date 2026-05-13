@@ -1,0 +1,14 @@
+# Plaintext secrets (these go through SOPS encryption)
+apps/**/secrets/password.txt
+
+# Age private keys
+age.agekey
+*.agekey
+
+# Local environment
+.env
+*.env.local
+
+# OS files
+.DS_Store
+Thumbs.db

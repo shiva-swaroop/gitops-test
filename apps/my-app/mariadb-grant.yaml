@@ -1,0 +1,27 @@
+apiVersion: mariadb.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: my-app-grant
+  namespace: my-app
+  labels:
+    app.kubernetes.io/name: my-app
+    app.kubernetes.io/part-of: gitops-test
+spec:
+  mariaRef:
+    name: my-app-db
+  database: my-app-data
+  table: "*"
+  username: my-app-user
+  grantOption: false
+  privileges:
+    - SELECT
+    - INSERT
+    - UPDATE
+    - DELETE
+    - CREATE
+    - DROP
+    - INDEX
+    - ALTER
+    - REFERENCES
+    - CREATE TEMPORARY TABLES
+    - EXECUTE

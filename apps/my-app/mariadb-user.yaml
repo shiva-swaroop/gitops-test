@@ -1,0 +1,16 @@
+apiVersion: mariadb.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: my-app-user
+  namespace: my-app
+  labels:
+    app.kubernetes.io/name: my-app
+    app.kubernetes.io/part-of: gitops-test
+spec:
+  mariaRef:
+    name: my-app-db
+  passwordSecretKeyRef:
+    name: db-secret
+    key: password
+  maxUserConnections: 20
+  host: "%"

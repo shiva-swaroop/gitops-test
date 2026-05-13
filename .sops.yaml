@@ -1,0 +1,11 @@
+---
+creation_rules:
+  # Root-level SOPS config for any .enc.yaml files across the repo
+  - path_regex: .*\.enc\.yaml
+    encrypted_regex: "^(data|stringData)$"
+    # Replace with your age public key after running scripts/03-configure-sops.sh
+    # The age key secret must be created in the flux-system namespace:
+    #   kubectl create secret generic sops-age \
+    #     --namespace=flux-system \
+    #     --from-file=age.agekey=/path/to/key.txt
+    age: age1...

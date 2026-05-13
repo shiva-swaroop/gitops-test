@@ -1,0 +1,14 @@
+apiVersion: mariadb.mariadb.com/v1alpha1
+kind: Database
+metadata:
+  name: my-app-data
+  namespace: my-app
+  labels:
+    app.kubernetes.io/name: my-app
+    app.kubernetes.io/part-of: gitops-test
+spec:
+  mariaRef:
+    name: my-app-db
+  characterSet: utf8mb4
+  collate: utf8mb4_unicode_ci
+  retryInterval: 5s

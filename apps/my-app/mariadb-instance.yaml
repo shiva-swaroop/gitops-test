@@ -1,0 +1,29 @@
+apiVersion: mariadb.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: my-app-db
+  namespace: my-app
+  labels:
+    app.kubernetes.io/name: my-app
+    app.kubernetes.io/part-of: gitops-test
+spec:
+  version: "11.4.2"
+  storage:
+    size: 1Gi
+    storageClassName: standard
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 3306
+  rootPasswordSecretKeyRef:
+    name: mariadb-root-secret
+    key: password
+  metrics:
+    enabled: false
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi
+      cpu: 500m
