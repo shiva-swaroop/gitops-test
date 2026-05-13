@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/shiva-swaroop/gitops-test/my-app:latest
+          image: docker.io/shivaswaroop1/my-app:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
