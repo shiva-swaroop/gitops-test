@@ -78,6 +78,10 @@ spec:
               port: http
             initialDelaySeconds: 5
             periodSeconds: 10
+          volumeMounts:
+            - name: app-code
+              mountPath: /app/app.py
+              subPath: app.py
           resources:
             requests:
               memory: 128Mi
@@ -85,3 +89,7 @@ spec:
             limits:
               memory: 256Mi
               cpu: 250m
+      volumes:
+        - name: app-code
+          configMap:
+            name: my-app-code
