@@ -56,6 +56,11 @@ spec:
                 secretKeyRef:
                   name: db-secret
                   key: password
+            - name: DB_POOL_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: my-app-config
+                  key: DB_POOL_SIZE
             - name: APP_PORT
               valueFrom:
                 configMapKeyRef:

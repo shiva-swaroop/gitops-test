@@ -28,7 +28,7 @@ DB_CONFIG = {
     "user": os.getenv("DB_USER", "my-app-user"),
     "password": os.getenv("DB_PASSWORD", ""),
     "pool_name": "my-app-pool",
-    "pool_size": 5,
+    "pool_size": int(os.getenv("DB_POOL_SIZE", "20")),
     "pool_reset_session": True,
     "collation": "utf8mb4_unicode_ci",
 }
