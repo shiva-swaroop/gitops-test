@@ -12,5 +12,5 @@ spec:
   passwordSecretKeyRef:
     name: db-secret
     key: password
-  maxUserConnections: 20
+  maxUserConnections: 150
   host: "%"

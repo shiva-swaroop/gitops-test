@@ -11,5 +11,5 @@ data:
   DB_PORT: "3306"
   DB_NAME: "my-app-data"
   DB_USER: "my-app-user"
-  DB_POOL_SIZE: "20"
+  DB_POOL_SIZE: "30"
   APP_PORT: "8080"
