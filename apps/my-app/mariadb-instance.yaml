@@ -28,3 +28,6 @@ spec:
     limits:
       memory: 512Mi
       cpu: 500m
+  myCnf: |
+    [mysqld]
+    max_connections=500
