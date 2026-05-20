@@ -9,6 +9,7 @@ resources:
   - configmap.yaml
   - app-code-configmap.yaml
   - deployment.yaml
+  - hpa.yaml
   - service.yaml
   - phpmyadmin-deployment.yaml
   - phpmyadmin-service.yaml
