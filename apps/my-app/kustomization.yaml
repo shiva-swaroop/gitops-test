@@ -13,4 +13,5 @@ resources:
   - service.yaml
   - phpmyadmin-deployment.yaml
   - phpmyadmin-service.yaml
+  - networkpolicy.yaml
   - secrets

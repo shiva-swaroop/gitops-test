@@ -15,9 +15,14 @@ spec:
         namespace: flux-system
       interval: 1h
   values:
-    adminPassword: admin
+    admin:
+      existingSecret: "grafana-admin-secret"
+      userKey: "admin-user"
+      passwordKey: "admin-password"
     persistence:
-      enabled: false
+      enabled: true
+      storageClassName: cinder-storage
+      size: 10Gi
     service:
       type: ClusterIP
       port: 3000

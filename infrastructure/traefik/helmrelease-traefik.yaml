@@ -42,14 +42,18 @@ spec:
     ports:
       traefik:
         port: 9000
-        expose: false
+        expose:
+          default: false
+        exposedPort: 9000
       web:
         port: 8000
-        expose: true
+        expose:
+          default: true
         exposedPort: 80
       websecure:
         port: 8443
-        expose: true
+        expose:
+          default: true
         exposedPort: 443
     dashboard:
       enabled: true

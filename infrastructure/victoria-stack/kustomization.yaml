@@ -6,3 +6,9 @@ resources:
   - helmrelease-vm-single.yaml
   - helmrelease-vl-single.yaml
   - helmrelease-grafana.yaml
+  - grafana-admin-secret.yaml
+  - grafana-dashboards-configmap.yaml
+  - ingress-grafana.yaml
+  - helmrepository-prometheus-community.yaml
+  - helmrelease-node-exporter.yaml
+  - helmrelease-kube-state-metrics.yaml

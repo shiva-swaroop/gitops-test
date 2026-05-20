@@ -21,6 +21,9 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: my-app
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
     spec:
       containers:
         - name: app

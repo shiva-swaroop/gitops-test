@@ -19,7 +19,9 @@ spec:
       scrape:
         enabled: true
       persistentVolume:
-        enabled: false
+        enabled: true
+        storageClass: cinder-storage
+        size: 20Gi
       resources:
         requests:
           memory: 256Mi

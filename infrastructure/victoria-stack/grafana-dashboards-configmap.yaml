@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards
+  namespace: flux-system
+  labels:
+    grafana_dashboard: "1"
+data:
+  flux-cluster.json: |
+    {
+      "title": "Flux Cluster",
+      "uid": "flux-cluster",
+      "panels": [],
+      "tags": ["flux"],
+      "timepicker": {},
+      "time": {}
+    }
+  kubernetes-cluster.json: |
+    {
+      "title": "Kubernetes Cluster",
+      "uid": "k8s-cluster",
+      "panels": [],
+      "tags": ["kubernetes"],
+      "timepicker": {},
+      "time": {}
+    }
