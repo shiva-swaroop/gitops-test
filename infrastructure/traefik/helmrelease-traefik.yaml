@@ -1,0 +1,68 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: flux-system
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: traefik
+      version: ">=30.0.0 <31.0.0"
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+      interval: 1h
+  values:
+    image:
+      name: traefik
+      tag: 3.2.3
+    deployment:
+      replicas: 2
+    ingressClass:
+      name: traefik
+      enabled: true
+      isDefault: true
+    providers:
+      kubernetesCRD:
+        enabled: true
+        ingressClass: traefik
+      kubernetesIngress:
+        enabled: true
+        ingressClass: traefik
+        allowExternalNameServices: false
+    rbac:
+      enabled: true
+      namespaced: false
+    service:
+      type: LoadBalancer
+      spec:
+        externalTrafficPolicy: Local
+    ports:
+      traefik:
+        port: 9000
+        expose: false
+      web:
+        port: 8000
+        expose: true
+        exposedPort: 80
+      websecure:
+        port: 8443
+        expose: true
+        exposedPort: 443
+    dashboard:
+      enabled: true
+      ingressRoute: false
+    logs:
+      general:
+        level: INFO
+      access:
+        enabled: true
+    resources:
+      requests:
+        memory: 128Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 500m

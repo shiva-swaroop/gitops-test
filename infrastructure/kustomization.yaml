@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
   - mariadb-operator
   - victoria-stack
+  - traefik
+  - storage-class.yaml
