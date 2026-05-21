@@ -22,10 +22,10 @@ spec:
         # annotations on operator pods (port 8080 /metrics).
         # For explicit static config, create a ConfigMap with scrape jobs and
         # set server.scrape.configMap: <name>
+      # Disabled because OpenStack Cinder has 0Gi volume quota on this project.
+      # Metrics data is ephemeral — acceptable for a staging/development cluster.
       persistentVolume:
-        enabled: true
-        storageClass: cinder-storage
-        size: 20Gi
+        enabled: false
       resources:
         requests:
           memory: 256Mi

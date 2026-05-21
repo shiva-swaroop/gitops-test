@@ -16,10 +16,10 @@ spec:
       interval: 1h
   values:
     server:
+      # Disabled because OpenStack Cinder has 0Gi volume quota on this project.
+      # Log data is ephemeral — acceptable for a staging/development cluster.
       persistentVolume:
-        enabled: true
-        storageClass: cinder-storage
-        size: 20Gi
+        enabled: false
       resources:
         requests:
           memory: 256Mi
