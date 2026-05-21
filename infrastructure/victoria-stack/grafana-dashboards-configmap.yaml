@@ -106,9 +106,9 @@ data:
           "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
           "targets": [{
             "expr": "sum(container_memory_working_set_bytes{container!=\"\"})",
-            "legendFormat": "Memory bytes"
+            "legendFormat": "Memory"
           }],
-          "unit": "bytes"
+          "unit": "bytes(IEC)"
         },
         {
           "title": "Pod Count",
@@ -197,7 +197,7 @@ data:
             "expr": "container_memory_working_set_bytes{container=\"mariadb\",namespace=\"my-app\"}",
             "legendFormat": "Memory"
           }],
-          "unit": "bytes"
+          "unit": "bytes(IEC)"
         },
         {
           "title": "DB App Health",
