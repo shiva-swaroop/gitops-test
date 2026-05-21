@@ -14,5 +14,6 @@ resources:
   - phpmyadmin-deployment.yaml
   - phpmyadmin-service.yaml
   - networkpolicy.yaml
+  - middleware.yaml
   - ingressroute.yaml
   - secrets

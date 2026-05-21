@@ -11,9 +11,7 @@ spec:
       match: Host(`my-app.gitops-test.local`)
       middlewares:
         - name: security-headers
-          namespace: flux-system
         - name: rate-limit
-          namespace: flux-system
       services:
         - name: my-app
           port: 8080
@@ -33,9 +31,7 @@ spec:
       match: Host(`my-app.gitops-test.local`)
       middlewares:
         - name: security-headers
-          namespace: flux-system
         - name: rate-limit
-          namespace: flux-system
       services:
         - name: my-app
           port: 8080
