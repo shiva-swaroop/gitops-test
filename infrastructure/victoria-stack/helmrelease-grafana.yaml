@@ -20,9 +20,9 @@ spec:
       userKey: "admin-user"
       passwordKey: "admin-password"
     persistence:
-      enabled: true
-      storageClassName: cinder-storage
-      size: 10Gi
+      # Disabled because OpenStack Cinder has 0Gi volume quota on this project.
+      # Grafana dashboards/datasources are provisioned via Flux-managed ConfigMaps.
+      enabled: false
     service:
       type: ClusterIP
       port: 3000
