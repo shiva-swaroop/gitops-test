@@ -36,9 +36,9 @@ spec:
       enabled: true
       namespaced: false
     service:
-      type: LoadBalancer
-      spec:
-        externalTrafficPolicy: Local
+      # ClusterIP because this Virtuozzo cluster has no LB provisioner.
+      # Traefik still handles Ingress routing via ClusterIP internally.
+      type: ClusterIP
     ports:
       traefik:
         port: 9000
