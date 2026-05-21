@@ -4,6 +4,7 @@ metadata:
   name: traefik-dashboard
   namespace: flux-system
 spec:
+  ingressClass: traefik
   entryPoints:
     - websecure
   routes:
@@ -24,6 +25,7 @@ metadata:
   name: traefik-dashboard-http
   namespace: flux-system
 spec:
+  ingressClass: traefik
   entryPoints:
     - web
   routes:
