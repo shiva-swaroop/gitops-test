@@ -26,6 +26,10 @@ spec:
     service:
       type: ClusterIP
       port: 3000
+    sidecar:
+      dashboards:
+        enabled: true
+        label: grafana_dashboard
     datasources:
       datasources.yaml:
         apiVersion: 1
