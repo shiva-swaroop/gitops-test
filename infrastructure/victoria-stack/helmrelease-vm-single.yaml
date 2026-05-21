@@ -18,6 +18,10 @@ spec:
     server:
       scrape:
         enabled: true
+        # MariaDB operator metrics are auto-discovered via prometheus.io/scrape
+        # annotations on operator pods (port 8080 /metrics).
+        # For explicit static config, create a ConfigMap with scrape jobs and
+        # set server.scrape.configMap: <name>
       persistentVolume:
         enabled: true
         storageClass: cinder-storage
