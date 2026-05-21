@@ -6,21 +6,229 @@ metadata:
   labels:
     grafana_dashboard: "1"
 data:
+  my-app.json: |
+    {
+      "title": "My App",
+      "uid": "my-app",
+      "tags": ["my-app", "flask"],
+      "timezone": "browser",
+      "panels": [
+        {
+          "title": "Request Rate",
+          "type": "graph",
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+          "targets": [{
+            "expr": "sum(rate(flask_http_requests_total[1m])) by (endpoint)",
+            "legendFormat": "{{ endpoint }}",
+            "interval": "15s"
+          }]
+        },
+        {
+          "title": "Error Rate",
+          "type": "graph",
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+          "targets": [{
+            "expr": "sum(rate(flask_http_errors_total[1m])) by (endpoint)",
+            "legendFormat": "{{ endpoint }}",
+            "interval": "15s"
+          }]
+        },
+        {
+          "title": "Database Health",
+          "type": "stat",
+          "gridPos": {"h": 4, "w": 4, "x": 0, "y": 8},
+          "targets": [{
+            "expr": "flask_db_health_status",
+            "legendFormat": "DB Health"
+          }],
+          "thresholds": "0,1"
+        },
+        {
+          "title": "Uptime",
+          "type": "stat",
+          "gridPos": {"h": 4, "w": 4, "x": 4, "y": 8},
+          "targets": [{
+            "expr": "flask_uptime_seconds",
+            "legendFormat": "Uptime"
+          }],
+          "unit": "s"
+        },
+        {
+          "title": "Total Requests",
+          "type": "stat",
+          "gridPos": {"h": 4, "w": 4, "x": 8, "y": 8},
+          "targets": [{
+            "expr": "sum(flask_http_requests_total)",
+            "legendFormat": "Total"
+          }]
+        },
+        {
+          "title": "Error Rate (%)",
+          "type": "graph",
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+          "targets": [{
+            "expr": "sum(rate(flask_http_errors_total[1m])) / sum(rate(flask_http_requests_total[1m])) * 100",
+            "legendFormat": "Error %"
+          }]
+        },
+        {
+          "title": "Items in Database",
+          "type": "stat",
+          "gridPos": {"h": 4, "w": 12, "x": 12, "y": 12},
+          "targets": [{
+            "expr": "sum(flask_http_requests_total{endpoint=\"list_items\"}) - sum(flask_http_errors_total{endpoint=\"list_items\"})",
+            "legendFormat": "DB Items"
+          }]
+        }
+      ],
+      "schemaVersion": 38,
+      "version": 1
+    }
   flux-cluster.json: |
     {
       "title": "Flux Cluster",
       "uid": "flux-cluster",
-      "panels": [],
-      "tags": ["flux"],
-      "timepicker": {},
-      "time": {}
+      "tags": ["flux", "kubernetes"],
+      "timezone": "browser",
+      "panels": [
+        {
+          "title": "CPU Usage",
+          "type": "graph",
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+          "targets": [{
+            "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"\"}[1m]))",
+            "legendFormat": "CPU cores"
+          }]
+        },
+        {
+          "title": "Memory Usage",
+          "type": "graph",
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+          "targets": [{
+            "expr": "sum(container_memory_working_set_bytes{container!=\"\"})",
+            "legendFormat": "Memory bytes"
+          }],
+          "unit": "bytes"
+        },
+        {
+          "title": "Pod Count",
+          "type": "stat",
+          "gridPos": {"h": 4, "w": 4, "x": 0, "y": 8},
+          "targets": [{
+            "expr": "count(kube_pod_info)",
+            "legendFormat": "Pods"
+          }]
+        },
+        {
+          "title": "Node Count",
+          "type": "stat",
+          "gridPos": {"h": 4, "w": 4, "x": 4, "y": 8},
+          "targets": [{
+            "expr": "count(kube_node_info)",
+            "legendFormat": "Nodes"
+          }]
+        },
+        {
+          "title": "Namespace Count",
+          "type": "stat",
+          "gridPos": {"h": 4, "w": 4, "x": 8, "y": 8},
+          "targets": [{
+            "expr": "count(kube_namespace_status_phase)",
+            "legendFormat": "Namespaces"
+          }]
+        },
+        {
+          "title": "Network I/O",
+          "type": "graph",
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+          "targets": [
+            {
+              "expr": "sum(rate(container_network_receive_bytes_total[1m]))",
+              "legendFormat": "RX"
+            },
+            {
+              "expr": "sum(rate(container_network_transmit_bytes_total[1m]))",
+              "legendFormat": "TX"
+            }
+          ],
+          "unit": "Bps"
+        },
+        {
+          "title": "Disk I/O",
+          "type": "graph",
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12},
+          "targets": [
+            {
+              "expr": "sum(rate(container_fs_reads_bytes_total[1m]))",
+              "legendFormat": "Read"
+            },
+            {
+              "expr": "sum(rate(container_fs_writes_bytes_total[1m]))",
+              "legendFormat": "Write"
+            }
+          ],
+          "unit": "Bps"
+        }
+      ],
+      "schemaVersion": 38,
+      "version": 1
     }
-  kubernetes-cluster.json: |
+  mariadb.json: |
     {
-      "title": "Kubernetes Cluster",
-      "uid": "k8s-cluster",
-      "panels": [],
-      "tags": ["kubernetes"],
-      "timepicker": {},
-      "time": {}
+      "title": "MariaDB",
+      "uid": "mariadb",
+      "tags": ["mariadb", "database"],
+      "timezone": "browser",
+      "panels": [
+        {
+          "title": "DB Pod CPU",
+          "type": "graph",
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+          "targets": [{
+            "expr": "rate(container_cpu_usage_seconds_total{container=\"mariadb\",namespace=\"my-app\"}[1m])",
+            "legendFormat": "CPU"
+          }]
+        },
+        {
+          "title": "DB Pod Memory",
+          "type": "graph",
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+          "targets": [{
+            "expr": "container_memory_working_set_bytes{container=\"mariadb\",namespace=\"my-app\"}",
+            "legendFormat": "Memory"
+          }],
+          "unit": "bytes"
+        },
+        {
+          "title": "DB App Health",
+          "type": "stat",
+          "gridPos": {"h": 4, "w": 4, "x": 0, "y": 8},
+          "targets": [{
+            "expr": "flask_db_health_status",
+            "legendFormat": "Health"
+          }],
+          "thresholds": "0,1"
+        },
+        {
+          "title": "DB Pod Restarts",
+          "type": "stat",
+          "gridPos": {"h": 4, "w": 4, "x": 4, "y": 8},
+          "targets": [{
+            "expr": "sum(kube_pod_container_status_restarts_total{container=\"mariadb\",namespace=\"my-app\"})",
+            "legendFormat": "Restarts"
+          }]
+        },
+        {
+          "title": "DB Disk Usage",
+          "type": "graph",
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+          "targets": [{
+            "expr": "rate(container_fs_writes_bytes_total{container=\"mariadb\",namespace=\"my-app\"}[1m])",
+            "legendFormat": "Disk Write"
+          }],
+          "unit": "Bps"
+        }
+      ],
+      "schemaVersion": 38,
+      "version": 1
     }

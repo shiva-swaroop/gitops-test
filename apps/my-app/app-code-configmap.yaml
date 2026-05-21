@@ -21,7 +21,9 @@ data:
     """
 
     import os
+    import time
     import logging
+    from threading import Lock
     import mysql.connector
     from mysql.connector import pooling
     from flask import Flask, jsonify, request
@@ -30,6 +32,23 @@ data:
     logger = logging.getLogger(__name__)
 
     app = Flask(__name__)
+
+    # Prometheus metrics counters
+    _metrics_lock = Lock()
+    _metrics = {
+        "http_requests_total": {"health": 0, "list_items": 0, "create_items": 0},
+        "http_errors_total": {"health": 0, "list_items": 0, "create_items": 0},
+        "db_health_status": 0,
+        "start_time_seconds": time.time(),
+    }
+
+    def _inc(name, label):
+        with _metrics_lock:
+            _metrics[name][label] = _metrics[name].get(label, 0) + 1
+
+    def _set(name, value):
+        with _metrics_lock:
+            _metrics[name] = value
 
     DB_CONFIG = {
         "host": os.getenv("DB_HOST", "my-app-db.my-app.svc.cluster.local"),
@@ -82,6 +101,45 @@ data:
     # Routes
     # ---------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------
+    # Prometheus /metrics endpoint
+    # ---------------------------------------------------------------------------
+
+    @app.route("/metrics")
+    def metrics():
+        """Prometheus-format metrics for VictoriaMetrics scraping."""
+        now = time.time()
+        uptime = now - _metrics.get("start_time_seconds", now)
+        lines = [
+            "# HELP flask_http_requests_total Total HTTP requests by endpoint",
+            "# TYPE flask_http_requests_total counter",
+        ]
+        for endpoint, count in _metrics.get("http_requests_total", {}).items():
+            lines.append(f'flask_http_requests_total{{endpoint="{endpoint}"}} {count}')
+
+        lines.append("")
+        lines.append("# HELP flask_http_errors_total Total HTTP errors by endpoint")
+        lines.append("# TYPE flask_http_errors_total counter")
+        for endpoint, count in _metrics.get("http_errors_total", {}).items():
+            lines.append(f'flask_http_errors_total{{endpoint="{endpoint}"}} {count}')
+
+        lines.append("")
+        lines.append("# HELP flask_db_health_status Database health (1=healthy, 0=unhealthy)")
+        lines.append("# TYPE flask_db_health_status gauge")
+        lines.append(f'flask_db_health_status {_metrics.get("db_health_status", 0)}')
+
+        lines.append("")
+        lines.append("# HELP flask_uptime_seconds Application uptime in seconds")
+        lines.append("# TYPE flask_uptime_seconds counter")
+        lines.append(f"flask_uptime_seconds {uptime:.0f}")
+
+        return "\n".join(lines) + "\n", 200, {"Content-Type": "text/plain; charset=utf-8"}
+
+
+    # ---------------------------------------------------------------------------
+    # Routes
+    # ---------------------------------------------------------------------------
+
     @app.route("/health")
     def health():
         """Liveness and readiness probe endpoint."""
@@ -92,15 +150,21 @@ data:
             cursor.fetchall()
             cursor.close()
             conn.close()
+            _set("db_health_status", 1)
+            _inc("http_requests_total", "health")
             return jsonify({"status": "healthy", "database": "connected"}), 200
         except Exception as e:
             logger.error("Health check failed: %s", e)
+            _set("db_health_status", 0)
+            _inc("http_requests_total", "health")
+            _inc("http_errors_total", "health")
             return jsonify({"status": "unhealthy", "database": str(e)}), 503
 
 
     @app.route("/api/items", methods=["GET"])
     def list_items():
         """Return all items from the database."""
+        _inc("http_requests_total", "list_items")
         try:
             conn = get_db_connection()
             cursor = conn.cursor(dictionary=True)
@@ -111,12 +175,14 @@ data:
             return jsonify(rows), 200
         except Exception as e:
             logger.error("Failed to fetch items: %s", e)
+            _inc("http_errors_total", "list_items")
             return jsonify({"error": str(e)}), 500
 
 
     @app.route("/api/items", methods=["POST"])
     def create_item():
         """Create a new item."""
+        _inc("http_requests_total", "create_items")
         data = request.get_json(force=True)
         name = data.get("name", "").strip()
         if not name:
@@ -132,6 +198,7 @@ data:
             return jsonify({"id": item_id, "name": name}), 201
         except Exception as e:
             logger.error("Failed to create item: %s", e)
+            _inc("http_errors_total", "create_items")
             return jsonify({"error": str(e)}), 500
 
 
