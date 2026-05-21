@@ -27,10 +27,8 @@ spec:
     providers:
       kubernetesCRD:
         enabled: true
-        ingressClass: traefik
       kubernetesIngress:
         enabled: true
-        ingressClass: traefik
         allowExternalNameServices: false
     rbac:
       enabled: true

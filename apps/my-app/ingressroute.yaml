@@ -4,7 +4,6 @@ metadata:
   name: my-app
   namespace: my-app
 spec:
-  ingressClass: traefik
   entryPoints:
     - websecure
   routes:
@@ -27,7 +26,6 @@ metadata:
   name: my-app-http
   namespace: my-app
 spec:
-  ingressClass: traefik
   entryPoints:
     - web
   routes:
