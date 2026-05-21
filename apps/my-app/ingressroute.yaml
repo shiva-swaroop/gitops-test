@@ -1,0 +1,41 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: my-app
+  namespace: my-app
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`my-app.gitops-test.local`)
+      middlewares:
+        - name: security-headers
+          namespace: flux-system
+        - name: rate-limit
+          namespace: flux-system
+      services:
+        - name: my-app
+          port: 8080
+  tls:
+    certResolver: letsencrypt-staging
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: my-app-http
+  namespace: my-app
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`my-app.gitops-test.local`)
+      middlewares:
+        - name: security-headers
+          namespace: flux-system
+        - name: rate-limit
+          namespace: flux-system
+      services:
+        - name: my-app
+          port: 8080

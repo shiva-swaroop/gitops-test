@@ -3,4 +3,6 @@ kind: Kustomization
 resources:
   - helmrepository-traefik.yaml
   - helmrelease-traefik.yaml
-  - ingress-dashboard.yaml
+  - middleware.yaml
+  - ingressroute-dashboard.yaml
+  - ingressroute-grafana.yaml

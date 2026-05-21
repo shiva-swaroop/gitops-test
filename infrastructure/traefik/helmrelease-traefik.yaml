@@ -63,6 +63,21 @@ spec:
         level: INFO
       access:
         enabled: true
+    certificatesResolvers:
+      letsencrypt-staging:
+        acme:
+          email: admin@you-moni.com
+          storage: /data/acme-staging.json
+          caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+          httpChallenge:
+            entryPoint: web
+      letsencrypt-prod:
+        acme:
+          email: admin@you-moni.com
+          storage: /data/acme-prod.json
+          caServer: https://acme-v02.api.letsencrypt.org/directory
+          httpChallenge:
+            entryPoint: web
     resources:
       requests:
         memory: 128Mi
