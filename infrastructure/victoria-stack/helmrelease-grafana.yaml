@@ -27,10 +27,11 @@ spec:
       type: ClusterIP
       port: 3000
     sidecar:
+      # skipTlsVerify required because cluster API server has a self-signed cert
+      skipTlsVerify: true
       dashboards:
         enabled: true
         label: grafana_dashboard
-        watchConfigMaps: true
     datasources:
       datasources.yaml:
         apiVersion: 1
