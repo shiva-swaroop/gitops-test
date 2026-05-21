@@ -15,7 +15,7 @@ data:
       "panels": [
         {
           "title": "Request Rate",
-          "type": "graph",
+          "type": "timeseries",
           "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
           "targets": [{
             "expr": "sum(rate(flask_http_requests_total[1m])) by (endpoint)",
@@ -25,7 +25,7 @@ data:
         },
         {
           "title": "Error Rate",
-          "type": "graph",
+          "type": "timeseries",
           "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
           "targets": [{
             "expr": "sum(rate(flask_http_errors_total[1m])) by (endpoint)",
@@ -64,7 +64,7 @@ data:
         },
         {
           "title": "Error Rate (%)",
-          "type": "graph",
+          "type": "timeseries",
           "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
           "targets": [{
             "expr": "sum(rate(flask_http_errors_total[1m])) / sum(rate(flask_http_requests_total[1m])) * 100",
@@ -93,7 +93,7 @@ data:
       "panels": [
         {
           "title": "CPU Usage",
-          "type": "graph",
+          "type": "timeseries",
           "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
           "targets": [{
             "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"\"}[1m]))",
@@ -102,7 +102,7 @@ data:
         },
         {
           "title": "Memory Usage",
-          "type": "graph",
+          "type": "timeseries",
           "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
           "targets": [{
             "expr": "sum(container_memory_working_set_bytes{container!=\"\"})",
@@ -139,7 +139,7 @@ data:
         },
         {
           "title": "Network I/O",
-          "type": "graph",
+          "type": "timeseries",
           "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
           "targets": [
             {
@@ -155,7 +155,7 @@ data:
         },
         {
           "title": "Disk I/O",
-          "type": "graph",
+          "type": "timeseries",
           "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12},
           "targets": [
             {
@@ -182,7 +182,7 @@ data:
       "panels": [
         {
           "title": "DB Pod CPU",
-          "type": "graph",
+          "type": "timeseries",
           "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
           "targets": [{
             "expr": "rate(container_cpu_usage_seconds_total{container=\"mariadb\",namespace=\"my-app\"}[1m])",
@@ -191,7 +191,7 @@ data:
         },
         {
           "title": "DB Pod Memory",
-          "type": "graph",
+          "type": "timeseries",
           "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
           "targets": [{
             "expr": "container_memory_working_set_bytes{container=\"mariadb\",namespace=\"my-app\"}",
@@ -220,7 +220,7 @@ data:
         },
         {
           "title": "DB Disk Usage",
-          "type": "graph",
+          "type": "timeseries",
           "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
           "targets": [{
             "expr": "rate(container_fs_writes_bytes_total{container=\"mariadb\",namespace=\"my-app\"}[1m])",
